@@ -1,0 +1,83 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Thank You</h4>
+    </div>
+    <div class="modal-body">
+        <div>
+            Your message has been sent, we will come back to you as soon as possible </div>
+
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-alert" (click)="close()" (click)="modal.dismiss('Cross click')">Ok</button>
+    </div>
+</ng-template>
+<div>
+    <div class="contact-images"><img src="assets/arobas.png" alt="">
+        <img src="assets/letter.png" alt="">
+        <img src="assets/phone.png" alt=""></div>
+</div>
+<div>
+    <form #form="ngForm">
+        <div class="form-group">
+            <input required minlength="3" maxlength="20" name="name" #name="ngModel" class="form-control" id="name"
+                type="text" placeholder="Your name" [(ngModel)]="contact.name">
+            <div class="alert alert-danger" *ngIf="name.touched && !name.valid">
+                <div *ngIf="name.errors.required">
+                    Your name is required
+                </div>
+                <div *ngIf="name.errors.minlength">
+                    Your name should be minimum {{name.errors.minlength.requiredLength}} letters
+                </div>
+                <div *ngIf="name.errors.maxlength">
+                    Your name should be maximum {{name.errors.maxlentgh.requiredLength}} letters
+                </div>
+
+            </div>
+        </div>
+
+        <div class="form-group">
+            <input required name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" #email="ngModel"
+                class="form-control" id="email" type="email" placeholder="Email" [(ngModel)]="contact.email">
+
+            <div class="alert alert-danger" *ngIf="email.touched && !email.valid">
+
+                <div *ngIf="email.errors.required">
+                    Email is required
+                </div>
+                <div *ngIf="email.errors.pattern">
+                    Email should have this pattern: xxxx@xxxx.xxxx
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <input name="phoneNumber" #phoneNumber="ngModel" class="form-control" id="phoneNumber" type="text"
+                placeholder="Phone number" [(ngModel)]="contact.phone">
+        </div>
+
+        <div class="form-group">
+            <input required name="subject" #subject="ngModel" class="form-control" id="subject" type="text"
+                placeholder="Subject" [(ngModel)]="contact.subject">
+            <div class="alert alert-danger" *ngIf="subject.touched && !subject.valid">
+
+                <div *ngIf="subject.errors.required">
+                    This field is required
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <textarea required name="message" cols="20" rows="5" #message="ngModel" class="form-control" id="message"
+                placeholder="Message" [(ngModel)]="contact.message"></textarea>
+            <div class="alert alert-danger" *ngIf="message.touched && !message.valid">
+                <div *ngIf="message.errors.required">
+                    This field is required
+                </div>
+            </div>
+        </div>
+
+        <button [disabled]="form.form.invalid" type="submit" value="Send" (click)="sendMessage(content)"
+            class="btn btn-dark">Send</button>
+            
+    </form>
+</div>
